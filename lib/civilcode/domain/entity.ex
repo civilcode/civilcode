@@ -1,5 +1,8 @@
 defmodule CivilCode.Entity do
   @moduledoc """
+  > These redesigned methods have a CQS query contract and act as Factories (11); that is, each
+    creates a new Aggregate instance and returns a reference to it." - [IDDD]
+
   ## Life cycle or operational states
 
   Determining the current state is done via a predicate:
@@ -14,6 +17,9 @@ defmodule CivilCode.Entity do
 
   order.state == "completed"
   ```
+
+  - pure entities (zero side effects, i.e. no indirect inputs, e.g. env, time)
+  - domain actions on entities
   """
 
   defmodule Metadata do
