@@ -1,5 +1,10 @@
 defmodule CivilCode.DomainEvent do
-  @moduledoc false
+  @moduledoc """
+
+  References:
+
+  * https://enterprisecraftsmanship.com/2017/10/03/domain-events-simple-and-reliable-solution/
+  """
 
   defmacro __using__(_) do
     quote do
