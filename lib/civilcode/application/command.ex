@@ -9,7 +9,7 @@ defmodule CivilCode.Command do
     CQRS architecture – they explicitly represent what the clients can do with the application. Just
     like events represent what the outcome of those actions could be.
 
- [Are CQRS commands part of the domain model?](https://enterprisecraftsmanship.com/2019/01/31/cqrs-commands-part-domain-model/)
+  [Are CQRS commands part of the domain model?](https://enterprisecraftsmanship.com/2019/01/31/cqrs-commands-part-domain-model/)
   """
 
   defmacro __using__(_args) do
