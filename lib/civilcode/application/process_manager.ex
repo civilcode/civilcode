@@ -1,4 +1,4 @@
-defmodule CivilCode.DomainService do
+defmodule CivilCode.ProcessManager do
   @moduledoc """
   > Consider a Process Manager as a sort of Application Service on top of the other components.
   It can contains one or more stateful aggregate that keep the state of a long running process
