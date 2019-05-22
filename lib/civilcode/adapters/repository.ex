@@ -22,7 +22,7 @@ defmodule CivilCode.Repository do
   store or event the file system.
   """
 
-  alias CivilCode.{Entity, EntityId, Result}
+  alias CivilCode.{Aggregate, Entity, EntityId, Result}
 
   defmodule Behaviour do
     @moduledoc false
@@ -37,7 +37,7 @@ defmodule CivilCode.Repository do
     @doc """
     Retrieves an aggregate from the Repository.
     """
-    @callback get(id) :: Entity.t()
+    @callback get(id) :: Aggregate.t()
 
     @doc """
     Persists the aggregate in the Repository.
