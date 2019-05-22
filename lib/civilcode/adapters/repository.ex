@@ -47,10 +47,19 @@ defmodule CivilCode.Repository do
 
   defmacro __using__(_) do
     quote do
-      alias CivilCode.{Entity, Result}
+      alias CivilCode.{Entity, RepositoryError, Result}
 
       @behaviour Behaviour
 
+      @doc """
+      Builds an Entity from a database record.
+
+      Example:
+
+          build(Order, fn ->
+            Repo.get!(Record, order_id)
+          end)
+      """
       def build(module, func) do
         record = func.()
 

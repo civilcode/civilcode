@@ -46,8 +46,9 @@ defmodule CivilCode.Aggregate do
   defmacro __using__(_) do
     quote do
       import Kernel, except: [apply: 2]
-      import CivilCode.Entity
-      use TypedStruct
+
+      import CivilCode.Aggregate
+      import CivilCode.Entity, only: [entity_schema: 1, update: 2, put_changes: 2]
 
       def new(attrs) do
         CivilCode.Entity.new(__MODULE__, attrs)
@@ -57,5 +58,9 @@ defmodule CivilCode.Aggregate do
         %CivilCode.BusinessRuleViolation{entity: entity, type: type}
       end
     end
+  end
+
+  def entity(module) do
+    CivilCode.Entity.new(module)
   end
 end

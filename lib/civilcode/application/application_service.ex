@@ -12,5 +12,8 @@ defmodule CivilCode.ApplicationService do
   """
 
   defmacro __using__(_) do
+    quote do
+      alias CivilCode.RepositoryError
+    end
   end
 end

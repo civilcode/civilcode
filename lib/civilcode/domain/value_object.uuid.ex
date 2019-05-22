@@ -4,7 +4,6 @@ defmodule CivilCode.ValueObject.Uuid do
   defmacro __using__(_) do
     quote do
       use CivilCode.DomainPrimitive
-      struct = __MODULE__
 
       typedstruct enforce: true do
         field(:value, String.t())
@@ -17,37 +16,31 @@ defmodule CivilCode.ValueObject.Uuid do
         {:ok, struct(__MODULE__, value: value)}
       end
 
-      defmodule Ecto.Type do
-        @moduledoc false
+      @behaviour Elixir.Ecto.Type
 
-        @behaviour Elixir.Ecto.Type
+      @impl true
+      def type, do: :uuid
 
-        @struct struct
+      @impl true
+      def cast(val)
 
-        @impl true
-        def type, do: :uuid
+      def cast(%__MODULE__{} = e), do: {:ok, e}
 
-        @impl true
-        def cast(val)
-
-        def cast(%@struct{} = e), do: {:ok, e}
-
-        def cast(value) when is_binary(value) do
-          @struct.new(value)
-        end
-
-        def cast(_), do: :error
-
-        @impl true
-        def load(value) when is_binary(value) do
-          {:ok, uuid} = Elixir.Ecto.UUID.load(value)
-          @struct.new(uuid)
-        end
-
-        @impl true
-        def dump(%@struct{} = e), do: Elixir.Ecto.UUID.dump(e.value)
-        def dump(_), do: :error
+      def cast(value) when is_binary(value) do
+        new(value)
       end
+
+      def cast(_), do: :error
+
+      @impl true
+      def load(value) when is_binary(value) do
+        {:ok, uuid} = Elixir.Ecto.UUID.load(value)
+        new(uuid)
+      end
+
+      @impl true
+      def dump(%__MODULE__{} = e), do: Elixir.Ecto.UUID.dump(e.value)
+      def dump(_), do: :error
     end
   end
 end

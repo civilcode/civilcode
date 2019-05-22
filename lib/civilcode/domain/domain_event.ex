@@ -9,6 +9,8 @@ defmodule CivilCode.DomainEvent do
   defmacro __using__(_) do
     quote do
       use TypedStruct
+
+      def new(params), do: struct(__MODULE__, params)
     end
   end
 end

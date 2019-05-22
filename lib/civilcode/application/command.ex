@@ -14,9 +14,24 @@ defmodule CivilCode.Command do
 
   defmacro __using__(_args) do
     quote do
-      alias CivilCode.Result
-
       @type t :: %__MODULE__{}
+
+      import Ecto.Changeset
+      import CivilCode.Command
+
+      alias CivilCode.Result
+    end
+  end
+
+  defmacro command_schema(do: block) do
+    quote do
+      use Ecto.Schema
+
+      @primary_key false
+
+      embedded_schema do
+        unquote(block)
+      end
     end
   end
 end
