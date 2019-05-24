@@ -11,6 +11,16 @@ defmodule CivilCode.ValueObject.NonNegInteger do
 
       @behaviour Elixir.Ecto.Type
 
+      def new(value) when value < 0 do
+        {:error, "cannot be negative"}
+      end
+
+      def new(value) do
+        {:ok, struct(__MODULE__, value: value)}
+      end
+
+      defoverridable new: 1
+
       @impl true
       def type, do: :integer
 

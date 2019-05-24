@@ -11,6 +11,12 @@ defmodule CivilCode.ValueObject.String do
 
       @behaviour Elixir.Ecto.Type
 
+      def new(value) do
+        {:ok, struct(__MODULE__, value: value)}
+      end
+
+      defoverridable new: 1
+
       @impl true
       def type, do: :string
 
