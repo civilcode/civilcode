@@ -1,11 +1,25 @@
 defmodule CivilCode.BusinessRuleViolation do
-  @moduledoc false
+  @moduledoc """
+  A voliation of a business rule when an Entity executes a domain action.
 
-  defstruct [:entity, :type]
+  ## Example
+
+      if in_stock?(quantity)
+        update(%StockItemDeplinished{quantity: quantity})
+      else
+        {:error, OutOfStock.new(entity: stock_item)}
+      end
+
+  ## Usage
+
+  Used in Rich-Domain and Event-Driven Architectures.
+  """
 
   defmacro __using__(_) do
     quote do
-      def new(params), do: struct(__MODULE__, params)
+      defstruct [:entity]
+
+      def new(params), do: struct!(__MODULE__, params)
     end
   end
 end

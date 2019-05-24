@@ -1,7 +1,9 @@
 defmodule CivilCode.ValueObject.NonNegInteger do
+  @moduledoc false
+
   defmacro __using__(_) do
     quote do
-      use CivilCode.DomainPrimitive
+      use CivilCode.ValueObject.Base
 
       typedstruct enforce: true do
         field(:value, non_neg_integer)

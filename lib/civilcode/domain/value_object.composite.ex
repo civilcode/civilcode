@@ -1,11 +1,11 @@
-defmodule CivilCode.DomainPrimitive.Composite do
+defmodule CivilCode.ValueObject.Composite do
   @moduledoc false
 
   alias CivilCode.Result
 
   defmacro __using__(_) do
     quote do
-      alias CivilCode.DomainPrimitive.Composite
+      alias CivilCode.ValueObject.Composite
       @type t :: %__MODULE__{}
 
       use Ecto.Schema

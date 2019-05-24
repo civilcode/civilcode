@@ -1,6 +1,26 @@
 defmodule CivilCode.RepositoryError do
   @moduledoc """
-  A type for errors that occur when persisting an aggregate/entity.
+  A type for errors that occur when persisting an aggregate.
+
+  ## Usage
+
+  The error is returned from a Repository and generally triggered by unique constraint violations.
+
+  ## Example
+
+      def save(changeset) do
+        result =
+          changeset
+          |> Ecto.Changeset.unique_constraint(:id, name: :magasin_sale_orders_pkey)
+          |> Repo.insert_or_update()
+
+        case result do
+          {:ok, order} -> Result.ok(order.id)
+          {:error, invalid_changeset} -> RepositoryError.validate(invalid_changeset)
+        end
+      end
+
+      # => {:error, %CivilCode.RepositoryError{field_name: :id, message: "has already been taken"}}
   """
   use TypedStruct
 
@@ -13,23 +33,6 @@ defmodule CivilCode.RepositoryError do
     field(:message, String.t())
   end
 
-  @doc """
-  Converts a changeset with repository errors such as unique field constraints.
-
-  Example:
-
-      %Record{}
-      |> Ecto.Changeset.change(Entity.get_fields(order, [:id, :email, :product_id, :quantity]))
-      |> Ecto.Changeset.unique_constraint(:id, name: :magasin_sale_orders_pkey)
-      |> Repo.insert_or_update()
-
-      case result do
-        {:ok, order_state} -> Result.ok(order_state.id)
-        {:error, changeset} -> RepositoryError.validate(changeset)
-      end
-
-      # => {:error, %CivilCode.RepositoryError{field_name: :id, message: "has already been taken"}}
-  """
   @spec validate(Ecto.Changeset.t()) :: {:error, t}
   def validate(changeset) do
     changeset

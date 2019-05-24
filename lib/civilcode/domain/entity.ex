@@ -1,25 +1,47 @@
 defmodule CivilCode.Entity do
   @moduledoc """
+  A concept in the domain that performs actions on a uniquely identified object.
+
+  > We design a domain concept as an Entity when we care about its individuality, when
+  > distinguishing it from all other objects in a system is a mandatory constraint. An Entity is
+  > a unique thing and is capable of being changed continuously over a long period of time.
+  > Changes may be so extensive that the object might seem much different from what it once was.
+  > Yet, it is the same object by identity.
+
   > These redesigned methods have a CQS query contract and act as Factories (11); that is, each
     creates a new Aggregate instance and returns a reference to it." - [IDDD]
+
+  Entities form Aggregates, one Entity in the Aggregate will act as the Aggregate Root
+  (`CivilCode.Aggregate.Root`), all function calls are made through the Aggregate, creating a
+  public API.
+
+  Entities have domain actions that operate on the Entity, or return new Aggregates of a different
+  type. The domain actions have no side effects, i.e. no indirect inputs, e.g. env, time.
 
   ## Life cycle or operational states
 
   Determining the current state is done via a predicate:
 
-  ```elixir
+      # good
 
-  # good
+      Order.completed?(order)
 
-  Order.completed?(order)
+      # bad
 
-  # bad
+      order.state == "completed"
 
-  order.state == "completed"
-  ```
+  ## Usage
 
-  - pure entities (zero side effects, i.e. no indirect inputs, e.g. env, time)
-  - domain actions on entities
+  Entities are used in all architectures. In Simple Architecture style they will have basic
+  CRUD functions while Rich-Domain and Event-Driven Architectures will have domain actions.
+
+  Entities can working on state from the Data application, or can create their own struct which
+  is hydrated from the Aggregate Repository.
+
+  ## Implementation
+
+  TypedStruct is used to implement Entity schemas when needed. Simple structs (vs Ecto-based structs)
+  allow for parameterised types, e.g. Maybe.t.
   """
 
   defmodule Metadata do

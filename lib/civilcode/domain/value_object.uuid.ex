@@ -3,7 +3,7 @@ defmodule CivilCode.ValueObject.Uuid do
 
   defmacro __using__(_) do
     quote do
-      use CivilCode.DomainPrimitive
+      use CivilCode.ValueObject.Base
 
       typedstruct enforce: true do
         field(:value, String.t())
