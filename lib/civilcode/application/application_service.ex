@@ -37,9 +37,9 @@ defmodule CivilCode.ApplicationService do
         use CivilCode.ApplicationService
 
         @spec new_product() :: Ecto.Changeset.t(Product.t)
-        @spec create_product(Params.t) :: Product.t | Ecto.Changeset.t(Product.t)
+        @spec create_product(Params.t) :: {:ok, Product.t} | {:error, Ecto.Changeset.t(Product.t)}
         @spec edit_product(EntityId.t) :: Ecto.Changeset.t(Product.t)
-        @spec update_product(EntityId.t, Params.t) :: Product.t | Ecto.Changeset.t(Product.t)
+        @spec update_product(EntityId.t, Params.t) :: {:ok, Product.t} | {:error, Ecto.Changeset.t(Product.t)}
       end
 
   In a __Rich-Domain__ or __Event-Based__ Architecture an ApplicationService will have a single
