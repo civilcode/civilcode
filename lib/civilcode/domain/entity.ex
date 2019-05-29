@@ -128,10 +128,10 @@ defmodule CivilCode.Entity do
 
     @type t :: %__MODULE__{}
 
-    defstruct events: [], assigns: %{}
+    defstruct events: [], record: nil
   end
 
-  @type t :: %{optional(atom) => any, __struct__: atom, __entity__: Metadata.t()}
+  @type t :: %{optional(atom) => any, __struct__: atom, __civilcode__: Metadata.t()}
 
   defmacro __using__(_) do
     quote do
@@ -155,25 +155,9 @@ defmodule CivilCode.Entity do
 
       Ecto.Schema.embedded_schema do
         unquote(block)
-        field(:__entity__, :map, default: %Metadata{})
+        field(:__civilcode__, :map, default: %Metadata{})
       end
     end
-  end
-
-  @doc """
-  Provides a space to place any kinda of data onto the entity. For example, the Repository uses
-  it to track the original record used to build an Entity.
-  """
-  @spec put_assigns(t, atom, any) :: t
-  def put_assigns(entity, key, value) do
-    new_assigns = Map.put(entity.__entity__.assigns, key, value)
-    updated_metadata = struct!(entity.__entity__, assigns: new_assigns)
-    struct!(entity, __entity__: updated_metadata)
-  end
-
-  @spec get_assigns(t, atom) :: any
-  def get_assigns(entity, key) do
-    entity.__entity__.assigns[key]
   end
 
   @doc """
@@ -182,8 +166,11 @@ defmodule CivilCode.Entity do
   @spec change(t | Ecto.Changeset.t(), event :: map, fields :: map | Keyword.t()) ::
           Ecto.Changeset.t()
   def change(entity, event, fields) do
-    metadata = %{entity.__entity__() | events: entity.__entity__.events ++ [event]}
-    Ecto.Changeset.change(%{entity | __entity__: metadata}, fields)
+    existing_events = get_metadata(entity, :events)
+
+    entity
+    |> put_metadata(:events, existing_events ++ [event])
+    |> Ecto.Changeset.change(fields)
   end
 
   # REPOSITORY RELATED FUNCTIONS
@@ -198,6 +185,27 @@ defmodule CivilCode.Entity do
   @spec build(module, struct) :: t
   def build(module, state) do
     fields = state |> Map.from_struct() |> Enum.into([])
-    struct(module, fields ++ [__entity__: struct!(Metadata)])
+    struct(module, fields ++ [__civilcode__: struct!(Metadata)])
   end
+
+  @doc """
+  Store the original database record used to build the entity.
+  """
+  @spec put_record(t, Ecto.Schema.t()) :: t
+  def put_record(entity, record) do
+    put_metadata(entity, :record, record)
+  end
+
+  @doc """
+  Fetch the original database record used to build the entity.
+  """
+  @spec get_record(t) :: Ecto.Schema.t()
+  def get_record(entity), do: entity.__civilcode__.record
+
+  defp put_metadata(entity, key, value) do
+    metadata = %{entity.__civilcode__ | key => value}
+    %{entity | __civilcode__: metadata}
+  end
+
+  defp get_metadata(entity, key), do: Map.fetch!(entity.__civilcode__, key)
 end

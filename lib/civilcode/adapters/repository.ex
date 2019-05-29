@@ -108,7 +108,9 @@ defmodule CivilCode.Repository do
   def load(record, module) do
     module
     |> Entity.build(record)
-    |> Entity.put_assigns(:record, record)
+    |> Entity.put_record(record)
     |> Result.ok()
   end
+
+  defdelegate get_record(entity), to: Entity
 end
