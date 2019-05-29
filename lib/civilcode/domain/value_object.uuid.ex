@@ -11,6 +11,12 @@ defmodule CivilCode.ValueObject.Uuid do
         field(:value, String.t())
       end
 
+      defimpl String.Chars do
+        def to_string(struct) do
+          to_string(struct.value)
+        end
+      end
+
       @spec new(String.t()) :: {:ok, t} | {:error, :must_be_uuid}
       def new(value) when is_nil(value), do: Result.error(:must_be_uuid)
       def new(value) when not is_binary(value), do: Result.error(:must_be_uuid)
