@@ -15,12 +15,12 @@ defmodule CivilCode.ValueObject.NonNegInteger do
       def new(value) when is_binary(value) do
         case Ecto.Type.cast(:integer, value) do
           {:ok, casted_value} -> new(casted_value)
-          :error -> Result.error(:must_be_an_integer)
+          :error -> Result.error("must be an integer")
         end
       end
 
       def new(value) when value < 0 do
-        Result.error(:must_not_be_negative)
+        Result.error("must be negative")
       end
 
       def new(value) do
@@ -45,8 +45,12 @@ defmodule CivilCode.ValueObject.NonNegInteger do
         |> to_ecto_result
       end
 
-      defp to_ecto_result({:ok, value}), do: Result.ok(value)
-      defp to_ecto_result({:error, _}), do: :error
+      defp to_ecto_result(result) do
+        case result do
+          {:ok, value} -> Result.ok(value)
+          {:error, msg} -> Result.error(message: msg)
+        end
+      end
 
       @impl true
       def load(value), do: new(value)
