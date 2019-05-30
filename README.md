@@ -127,20 +127,21 @@ A full directory structure for an application is demonstrated by this example:
                              adapters/
                                order_repository.ex
                              application/
-                               complete_order.ex
-                               cancel_order.ex
-                               order_application_service.ex
-                               payment_application_service.x
-                               order_process_manager.ex
+                               order/
+                                 complete_order.ex
+                                 cancel_order.ex
+                                 order_application_service.ex
+                                 order_process_manager.ex
+                               payment/
+                                 payment_application_service.x
                              domain/
                                order/order.ex
                                      order_item.ex
                                      order_completed.ex
                                      order_canceled.ex
+                                     customer_discount_service.ex
                                payment/payment.ex
                                        payment_completed.ex
-                               services/
-                                 customer_discount_service.ex
 
 The key directories in this file structure are:
 
