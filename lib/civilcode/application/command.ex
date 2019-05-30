@@ -70,7 +70,7 @@ defmodule CivilCode.Command do
 
       @type t :: %__MODULE__{}
 
-      import Ecto.Changeset, except: [cast: 3, cast: 4]
+      import Ecto.Changeset, except: [cast: 3, cast: 4, apply_action: 2]
       import CivilCode.Command
 
       alias Ecto.Changeset
@@ -88,4 +88,10 @@ defmodule CivilCode.Command do
   end
 
   defp ensure_map(params), do: Enum.into(params, %{})
+
+  @doc """
+  Applies the changes to the changeset using `Ecto.Changeset.apply_action/2`. This provides
+  a level of abstraction so the developer does not need to think what `action` to use.
+  """
+  def apply(changeset), do: Ecto.Changeset.apply_action(changeset, :update)
 end
