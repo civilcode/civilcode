@@ -53,7 +53,7 @@ defmodule CivilCode.Aggregate do
 
     ## Usage
 
-    Aggregates are only used in __Rich-Domains__ and __Event-Based__ architectures. The root of the
+    Aggregates are only used in a __Rich-Domains__. The root of the
     Aggreate is identified by:
 
         use CivilCode.Aggregate.Root
@@ -64,7 +64,7 @@ defmodule CivilCode.Aggregate do
 
     ## Design Constraints
 
-    Rich-Domain and Event-Based:
+    Rich-Domain:
 
     * Aggregates only refer to other aggregates by ID. This communicates what Entities are included
       in the aggregate.

@@ -23,7 +23,7 @@ defmodule CivilCode.Command do
 
   ## Usage
 
-  __Rich-Domain__ and __Event-Driven__ Architecture MUST use Commands as Entities in these architectures
+  A __Rich-Domain__ Architecture MUST use Commands as Entities in these architectures
   accept Value Objects only, i.e. not `CivilCode.Params.t`.
 
   This Command implementation uses Ecto, so it integrates with Phoenix forms seamlessly and

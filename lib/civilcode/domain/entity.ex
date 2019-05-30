@@ -23,7 +23,7 @@ defmodule CivilCode.Entity do
   type. The domain actions have no side effects, i.e. no indirect inputs, e.g. env, time.
 
   Entities are used in all architectures. In __Simple-Domain__ Architecture style they will have basic
-  CRUD functions, i.e. `create` and `update` while __Rich-Domain__ and __Event-Driven__ Architectures will
+  CRUD functions, i.e. `create` and `update` while __Rich-Domain__ Architectures will
   have domain actions.
 
   Entities can working on state from the Data application, known as the Data schema, or can create

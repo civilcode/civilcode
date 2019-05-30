@@ -95,16 +95,13 @@ Our styles of application enables us to refactor from one style to another with 
 of friction. Our clients `platform` consists of a number of applications and each of those
 applications may exhibit a different style of DDD.
 
-We have a finite number of application styles:
+We have two application styles:
 
 1. **Simple-Domain Architecture**: suitable for CRUD style applications. We should always consider this
    style first.
 2. **Rich-Domain Architecture**: implement concepts from our Event Storming such as commands,
   aggregates, and events with weak (implicit) or strong types (explicit). This is our sweet-spot
   for the type of business applications we develop.
-3. **Event-Driven Architecture (EDA)**: implements publishing and subscribing to Domain Events. This
-   architecture will be rarely used and only in the case where decoupling of aggregates and
-   contexts are required.
 
 These application styles handle commands only. Commands do not need to persist in the database,
 but involve domain logic, e.g. calculate a "return on investment". Simple queries are
@@ -249,7 +246,7 @@ The key characteristics of a Rich-Domain Architecture are:
 * once inside the application service module value objects are used, i.e. validated types
 * domain actions receive validated types only (i.e. not `CivilCode.Params.t`)
 * a repository for the aggregate is required
-* use DomainEvents as a method to reason about the application, even if they are not published
+* use a `CivilCode.DomainEvent` to communicate between bounded contexts if required
 
 ```elixir
 # apps/magasin_core/lib/magasin_core/sales/application/order_application_service.ex
@@ -297,12 +294,6 @@ defmodule MagasinCore.Sales.Order do
   @spec cancel(t) :: {:ok, Changeset.t(t)} | {:error, BusinessException.t}
 end
 ```
-
-## 3. Event-Driven Architecture
-
-This application style is event-based using `CivilCode.DomainEvent`.
-
-TODO: Describe this in more detail when we need it.
 
 ## Building Blocks
 
