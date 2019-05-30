@@ -70,7 +70,7 @@ defmodule CivilCode.Command do
 
       @type t :: %__MODULE__{}
 
-      import Ecto.Changeset
+      import Ecto.Changeset, except: [cast: 3, cast: 4]
       import CivilCode.Command
 
       alias Ecto.Changeset
@@ -79,4 +79,13 @@ defmodule CivilCode.Command do
       @primary_key false
     end
   end
+
+  @doc """
+  Overrides `Ecto.Changeset.cast/4` to accept `params` as a `Keyword.t`, as well as a `map`.
+  """
+  def cast(data, params, permitted, opts \\ []) do
+    Ecto.Changeset.cast(data, ensure_map(params), permitted, opts)
+  end
+
+  defp ensure_map(params), do: Enum.into(params, %{})
 end
