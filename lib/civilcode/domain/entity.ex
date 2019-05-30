@@ -136,7 +136,9 @@ defmodule CivilCode.Entity do
   defmacro __using__(_) do
     quote do
       import CivilCode.Entity
+      import Ecto.Changeset
 
+      alias CivilCode.Result
       alias Ecto.Changeset
 
       def new(attrs \\ []) do
