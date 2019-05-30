@@ -165,31 +165,20 @@ command.
 
 ### Data Application
 
-For each platform a "data" application provides the domain types used across many applications.
-These types are defined using Ecto and typically persisted in a RDMBS.
+For each platform a "data" application provides the `CivilCode.Record` and `CivilCode.ValueObjects`
+used across many applications. These types are defined using Ecto and typically persisted in a RDMBS.
 
     acme_data/lib/acme_data/
       catalog/
-        product.ex
+        product_record.ex
       sales/
-        order.ex
-        order_item.ex
+        order_record.ex
+        order_item_record.ex
         quantity.ex
     acme_core/lib/acme_core/
 
 Structuring the application this way simplifies how the application interacts with the RDMBS,
 especially when testing (e.g. factories).
-
-Separating the data from the behaviour lends it self well to functional programming. Consider the
-type Maybe, that has several implementations, functor, applicative and monad (see the
-directory/module of [Control](https://github.com/slogsdon/elixir-control/tree/master/lib) a
-for library for type classes such as Monad).
-
-If a more specific type is required in a business use case, a new type can be created within
-the domain of that module.
-
-By using the existing data types, we avoid the overhead of mapping from table-backed structs to
-plain-old structs that have the exact same structure.
 
 ### Basic Functional Concepts
 

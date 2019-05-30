@@ -26,7 +26,7 @@ defmodule CivilCode.Entity do
   CRUD functions, i.e. `create` and `update` while __Rich-Domain__ Architectures will
   have domain actions.
 
-  Entities can working on state from the Data application, known as the Data schema, or can create
+  Entities can working on state from the Data application, known as a `CivilCode.Record`, or can create
   their own struct which is loaded from the Aggregate Repository.
 
   Domain Actions will always return a valid `Ecto.Changeset.t()` unless a business rule has been violated
@@ -57,7 +57,7 @@ defmodule CivilCode.Entity do
         end
       end
 
-      # Event-Based
+      # Rich-Domain with DomainEvent
 
       @spec deplenish(t, Quantity.t) :: {:ok, Changeset.t(t)}, {:error, OutOfStock.t}
       def deplenish(stock_item, quantity) do
@@ -91,7 +91,7 @@ defmodule CivilCode.Entity do
 
       order.state == "completed"
   ```
-  * Data Schemas can be alias normally as if they were lived in the "core" application.
+  * A `CivilCode.Record` can be alias normally as if they were lived in the "core" application.
     This reduces the amount of noise that would occur in the module when referencing with
     the full module path.
   ```
@@ -100,10 +100,10 @@ defmodule CivilCode.Entity do
         use CivilCode.Entity
 
         alias MagasinData.Catalog
-        alias MagasinData.Sales.Order
+        alias MagasinData.Sales.OrderRecord
       end
   ```
-  * Create a type `t/0` with Data Schema as this will simplify typespec signatures and make
+  * Create a type `t/0` for a `CivilCode.Record` as this will simplify typespec signatures and make
     refactoring to a Custom schema later if required. Then all of the modules in the "core"
     application can reference that alias:
 
@@ -112,13 +112,13 @@ defmodule CivilCode.Entity do
       defmodule MagasinCore.Sales.Order do
         use CivilCode.Entity
 
-        alias MagasinData.Sales.Order
+        alias MagasinData.Sales.OrderRecord
 
-        @type t :: Order.t
+        @type t :: OrderRecord.t
       end
   ```
 
-  Rich-Domain and Event-Based:
+  Rich-Domain:
 
   * Ecto Schema is used to implement Entity schemas when needed.
   """
