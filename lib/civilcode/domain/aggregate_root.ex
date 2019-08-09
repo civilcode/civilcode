@@ -5,7 +5,7 @@ defmodule CivilCode.AggregateRoot do
   ## Usage
 
   Aggregates are only used in a __Rich-Domains__. The root of the
-  Aggreate is identified by:
+  Aggregate is identified by:
 
       use CivilCode.AggregateRoot
 
@@ -60,6 +60,18 @@ defmodule CivilCode.AggregateRoot do
 
   [Effective Aggregate Design - Part I: Modeling a Single Aggregate](http://dddcommunity.org/wp-content/uploads/files/pdf_articles/Vernon_2011_1.pdf)
   [Effective Aggregate Design - Part II: Making Aggregates Work Together](http://dddcommunity.org/wp-content/uploads/files/pdf_articles/Vernon_2011_2.pdf)
+
+  [Microsofts architecture guide](https://docs.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/domain-model-layer-validations)
+  explains the concept of protecting business invariants:
+
+  > The main responsibility of an aggregate is to enforce invariants across state changes for all
+  > the entities within that aggregate. Domain entities should always be valid entities.
+  > There are a certain number of invariants for an object that should always be true.
+  > For example, an order item object always has to have a quantity that must be a positive integer,
+  > plus an article name and price. Therefore, invariants enforcement is the responsibility of the
+  > domain entities (especially of the aggregate root) and an entity object should not be able to
+  > exist without being valid. Invariant rules are simply expressed as contracts, and exceptions
+  > or notifications are raised when they are violated.
 
   Finally, Vladimir Khorikov's on [Domain-Driven in Practice](https://app.pluralsight.com/player?course=domain-driven-design-in-practice&author=vladimir-khorikov&name=domain-driven-design-in-practice-m1&clip=0)
   has a good clip on [How to Find Boundaries for Aggregates](https://app.pluralsight.com/player?course=domain-driven-design-in-practice&author=vladimir-khorikov&name=domain-driven-design-in-practice-m4&clip=4) in
