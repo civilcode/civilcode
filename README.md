@@ -71,6 +71,7 @@ Beyond key concepts of DDD other related influences are:
 * Hexagonal or Ports and Adapters [IDDD pg125]
 * Algebraic Data Types (ADT); read [Design with Types](https://fsharpforfunandprofit.com/posts/designing-with-types-intro/#series-toc)
 * Event Storming; watch [Event Storming for Fun and Profit](https://www.youtube.com/watch?v=OcIu-dvrXhY)
+* [Command Query Responsibility Segregation (CQRS)](https://enterprisecraftsmanship.com/2015/04/20/types-of-cqrs/)
 
 Other references include:
 
