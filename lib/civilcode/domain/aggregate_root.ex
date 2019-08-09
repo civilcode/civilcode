@@ -25,6 +25,11 @@ defmodule CivilCode.AggregateRoot do
   * Aggregates comply with [ACID](https://en.wikipedia.org/wiki/ACID_(computer_science)).
   * Aggregates are deleted together in a `CASCADING DELETE`.
 
+  Aggregates always create new aggregates or entities. You can only create new aggregate from
+  another aggregate, e.g. You maybe consider `Product.create(id, name, description)` if it as at
+  to top of the object graph for that context, but even in this instance, consider a singleton,
+  e.g. `Catalog.add_product(id, name, description)`.
+
   ## From the Experts
 
   Vaughn Vernon describes aggregates best in his book [Domain-Driven Design Distilled](https://books.google.ca/books?id=k9zIDAAAQBAJ&printsec=frontcover&dq=Domain-Driven+Design+Distilled&hl=en&sa=X&redir_esc=y#v=onepage&q=Domain-Driven%20Design%20Distilled&f=false)
@@ -81,7 +86,7 @@ defmodule CivilCode.AggregateRoot do
   having hundreds of `comment`s. However, an `order` is more like a "one to some" than a "one to many"
   relationship with `line-items`, where an `order` will only have a few `line-items`.
 
-  Another approach in designing an aggregate is to conisder how it would be Event-Sourced.
+  Another approach in designing an aggregate is to consider how it would be Event-Sourced.
   """
 
   defmacro __using__(_) do
