@@ -77,7 +77,7 @@ defmodule CivilCode.Repository do
     quote do
       @behaviour Behaviour
 
-      alias CivilCode.{Entity, RepositoryError, Result}
+      alias CivilCode.{Entity, EntityId, RepositoryError, Result}
 
       alias unquote(repo)
 
