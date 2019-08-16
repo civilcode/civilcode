@@ -69,6 +69,8 @@ defmodule CivilCode.Repository do
     """
     @callback save(Entity.t() | Ecto.Changeset.t()) ::
                 {:ok, Aggregate.t()} | {:error, RepositoryError.t()}
+
+    @optional_callbacks next_id: 0, get: 1, save: 1
   end
 
   defmacro __using__(opts) do
