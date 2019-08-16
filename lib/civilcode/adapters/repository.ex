@@ -52,7 +52,7 @@ defmodule CivilCode.Repository do
     @typedoc """
     The struct representating a specific entity id, e.g. `ProductId.t/0`
     """
-    @type id :: %{__struct__: atom, value: EntityId.t()}
+    @type id :: %{__struct__: atom, value: EntityId.t()} | EntityId.t()
 
     @doc """
     Generates an ID for an entity.
