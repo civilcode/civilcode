@@ -42,7 +42,7 @@ defmodule CivilCode.Repository do
   > the Repository, you will be unable to retrieve it from that point forward. [IDDD, p. 401]
   """
 
-  alias CivilCode.{Aggregate, Entity, EntityId, Result}
+  alias CivilCode.{AggregateRoot, Entity, EntityId, Result}
 
   defmodule Behaviour do
     @moduledoc """
@@ -62,13 +62,13 @@ defmodule CivilCode.Repository do
     @doc """
     Retrieves an aggregate from the Repository.
     """
-    @callback get(id) :: {:ok, Aggregate.t()} | {:error, RepositoryError.t()}
+    @callback get(id) :: {:ok, AggregateRoot.t()} | {:error, RepositoryError.t()}
 
     @doc """
     Persists the aggregate in the Repository.
     """
     @callback save(Entity.t() | Ecto.Changeset.t()) ::
-                {:ok, Aggregate.t()} | {:error, RepositoryError.t()}
+                {:ok, AggregateRoot.t()} | {:error, RepositoryError.t()}
 
     @optional_callbacks next_id: 0, get: 1, save: 1
   end
