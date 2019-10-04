@@ -3,7 +3,7 @@ defmodule CivilCode.ValueObject.Decimal do
   A value object based on a decimal.
   """
 
-  defmacro __using__(_) do
+  defmacro __using__(_opts) do
     quote do
       use CivilCode.ValueObject.Base
 
@@ -13,7 +13,19 @@ defmodule CivilCode.ValueObject.Decimal do
         field(:value, Decimal.t())
       end
 
-      def new(value) when is_binary(value) do
+      defimpl String.Chars do
+        def to_string(value_object) do
+          unquote(__CALLER__.module).to_string(value_object)
+        end
+      end
+
+      defimpl Jason.Encoder do
+        def encode(value_object, _opts) do
+          Jason.encode!(value_object.value)
+        end
+      end
+
+      def new(value) when is_binary(value) or is_integer(value) do
         with {:ok, value} <- Ecto.Type.cast(:decimal, value) do
           new(value)
         end
@@ -21,7 +33,7 @@ defmodule CivilCode.ValueObject.Decimal do
 
       def new(%Decimal{} = value) do
         __MODULE__
-        |> struct(value: value)
+        |> struct!(value: value)
         |> Result.ok()
       end
 
@@ -29,16 +41,14 @@ defmodule CivilCode.ValueObject.Decimal do
         Result.error("is invalid")
       end
 
-      @spec to_decimal(t) :: Decimal.t()
-      def to_decimal(value_object), do: value_object.value
-
-      defimpl String.Chars do
-        def to_string(value_object) do
-          Decimal.to_string(value_object.value)
-        end
+      def to_string(value_object) do
+        Decimal.to_string(value_object.value)
       end
 
-      defoverridable new: 1
+      defoverridable new: 1, to_string: 1
+
+      @spec to_decimal(t) :: Decimal.t()
+      def to_decimal(value_object), do: value_object.value
 
       use Elixir.Ecto.Type
 
