@@ -1,14 +1,14 @@
-defmodule CivilCode.ValueObject.DecimalTest do
+defmodule CivilCode.ValueObject.IntegerTest do
   use ExUnit.Case
 
   import ExUnit.CaptureIO
 
   describe "inspect" do
     test "returns a string representation" do
-      value = Fixtures.Decimal.new!("0.10")
+      value = Fixtures.Integer.new!("123")
 
       inspection = fn -> IO.inspect(value) end
-      assert capture_io(inspection) == "#Fixtures.Decimal<0.10>\n"
+      assert capture_io(inspection) == "#Fixtures.Integer<123>\n"
     end
   end
 end
