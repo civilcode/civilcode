@@ -7,7 +7,7 @@ defmodule CivilCode.Result do
   @type error(any) :: {:error, any}
 
   @typedoc "the two-track type"
-  @type t(a, b) :: ok(a) | error(b)
+  @type t(a, b) :: {:ok, a} | {:error, b}
 
   @spec unwrap!(ok(any)) :: any | no_return
   def unwrap!({:ok, payload}), do: payload
