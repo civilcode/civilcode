@@ -132,7 +132,7 @@ defmodule CivilCode.Entity do
     defstruct events: [], record: nil
   end
 
-  @type t :: %{optional(atom) => any, __struct__: atom, __civilcode__: Metadata.t()}
+  @type t :: %{optional(atom) => any, __struct__: atom}
 
   defmacro __using__(_) do
     quote do
