@@ -65,7 +65,7 @@ defmodule CivilCode.MixProject do
   defp deps do
     [
       # Development
-      {:dialyxir, "~> 1.0.0-rc.4", only: :dev, runtime: false},
+      {:dialyxir, "~> 1.0.0", only: :dev, runtime: false},
       {:ex_doc, "~> 0.20.2", only: :dev, runtime: false},
       {:mix_test_watch, "~> 0.5", only: :dev, runtime: false},
 
